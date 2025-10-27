@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hibana — Compile-time Multiparty Session Types for Rust</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="hibana-hero.svg" alt="HIBANA" class="logo">
+            <h1>Hibana — Compile-time Multiparty Session Types <span class="no-break">for Rust</span></h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="intro">
+            <div class="container">
+                <p class="lead">
+                    What if your compiler could prove your protocol is deadlock-free?
+                </p>
+                <p>
+                    Hibana is a <code>#![no_std]</code> multiparty session types engine that brings established type-theoretic guarantees into everyday systems.
+                    Write your global choreography once, project it at compile time, and get affine cursors that make protocol violations impossible.
+                </p>
+            </div>
+        </section>
+
+        <section class="code-example">
+            <div class="container">
+                <pre><code class="syntax-rust"><span class="hl-keyword">use</span> <span class="hl-namespace">hibana::g</span>::{<span class="hl-keyword">self</span>, <span class="hl-type">Msg</span>, <span class="hl-type">Role</span>};
+
+<span class="hl-keyword">type</span> <span class="hl-type">Controller</span> <span class="hl-operator">=</span> <span class="hl-type">Role</span><span class="hl-operator">&lt;</span><span class="hl-number">0</span><span class="hl-operator">&gt;</span>;
+<span class="hl-keyword">type</span> <span class="hl-type">Worker</span> <span class="hl-operator">=</span> <span class="hl-type">Role</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">&gt;</span>;
+<span class="hl-keyword">type</span> <span class="hl-type">Ping</span> <span class="hl-operator">=</span> <span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span>, ()<span class="hl-operator">&gt;</span>;
+<span class="hl-keyword">type</span> <span class="hl-type">Pong</span> <span class="hl-operator">=</span> <span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span>, ()<span class="hl-operator">&gt;</span>;
+
+<span class="hl-keyword">const</span> <span class="hl-const">PINGPONG</span>: <span class="hl-namespace">g</span>::<span class="hl-type">Program</span><span class="hl-operator">&lt;</span>_<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Controller</span>, <span class="hl-type">Worker</span>, <span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>(),
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Worker</span>, <span class="hl-type">Controller</span>, <span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>(),
+);
+
+<span class="hl-keyword">const</span> <span class="hl-const">CONTROLLER</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span>
+    <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PINGPONG</span>);
+<span class="hl-keyword">const</span> <span class="hl-const">WORKER</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">1</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span>
+    <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PINGPONG</span>);
+
+<span class="hl-keyword">let</span> <span class="hl-variable">controller</span> <span class="hl-operator">=</span> <span class="hl-variable">cluster</span>.<span class="hl-method">attach_cursor</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span>(<span class="hl-variable">rv</span>, <span class="hl-variable">sid</span>, <span class="hl-variable">lane</span>, <span class="hl-operator">&amp;</span><span class="hl-const">CONTROLLER</span>)<span class="hl-operator">?</span>;
+<span class="hl-keyword">let</span> <span class="hl-variable">worker</span> <span class="hl-operator">=</span> <span class="hl-variable">cluster</span>.<span class="hl-method">attach_cursor</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span>, _<span class="hl-operator">&gt;</span>(<span class="hl-variable">rv</span>, <span class="hl-variable">sid</span>, <span class="hl-variable">lane</span>, <span class="hl-operator">&amp;</span><span class="hl-const">WORKER</span>)<span class="hl-operator">?</span>;
+
+<span class="hl-keyword">let</span> (<span class="hl-variable">controller</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">controller</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span>()).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
+<span class="hl-keyword">let</span> (<span class="hl-variable">worker</span>, <span class="hl-type">Ping</span>(())) <span class="hl-operator">=</span> <span class="hl-variable">worker</span>.<span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>().<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
+<span class="hl-keyword">let</span> (<span class="hl-variable">worker</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">worker</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span>()).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
+<span class="hl-keyword">let</span> (<span class="hl-variable">controller</span>, <span class="hl-type">Pong</span>(())) <span class="hl-operator">=</span> <span class="hl-variable">controller</span>.<span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>().<span class="hl-keyword">await</span><span class="hl-operator">?</span>;</code></pre>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature">
+                    <h3>Const Projection as Effect</h3>
+                    <p><code>g::Program</code> builds protocols with const DSL, projecting to <code>RoleProgram</code> without code generation</p>
+                </div>
+                <div class="feature">
+                    <h3>Session-as-Effect Control</h3>
+                    <p>Every cursor step is a <code>CpEffect</code>; CapFlow tokens and leases keep cancel/checkpoint/commit/rollback affine and message-driven</p>
+                </div>
+                <div class="feature">
+                    <h3>Deterministic Observability</h3>
+                    <p>16-byte tap ring + streaming checker makes crash-stop behavior auditable; EPF VM policies execute through the same capability channel</p>
+                </div>
+                <div class="feature">
+                    <h3>Zero Polling Transport</h3>
+                    <p><code>Transport::open</code> / <code>send</code> futures pin to the runtime you already use—no background threads or busy loops</p>
+                </div>
+                <div class="feature">
+                    <h3>Embedded First</h3>
+                    <p><code>#![no_std]</code> and <code>no_alloc</code> by default, runs on bare metal with lease-first attach and affine consumption</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="crates">
+            <div class="container">
+                <h2>Crates</h2>
+                <div class="crate">
+                    <h3>hibana</h3>
+                    <div class="crate-content">
+                        <p>Compile-time MPST with const projection, CapFlow control, and deterministic observability</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana">hibanaworks/hibana</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-quic <span class="coming-soon">(Coming Soon)</span></h3>
+                    <div class="crate-content">
+                        <p>QUIC choreography with distributed splice support for connection migration</p>
+                        <p class="repo-note">Will be published at <a href="https://github.com/hibanaworks/hibana-quicwork">hibanaworks/hibana-quicwork</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-h3 <span class="coming-soon">(Coming Soon)</span></h3>
+                    <div class="crate-content">
+                        <p>HTTP/3 on top of QUIC streams with typed request/response choreography</p>
+                        <p class="repo-note">Will be published at <a href="https://github.com/hibanaworks/hibana-quicwork">hibanaworks/hibana-quicwork</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>HibanaOS <span class="coming-soon">(Coming Soon)</span></h3>
+                    <div class="crate-content">
+                        <p>A <code>#![no_std]</code> unikernel with type-safe async executor and WASI host, driven entirely by Hibana session protocols</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="install">
+            <div class="container">
+                <h2>Get Started</h2>
+                <pre><code>[dependencies]
+hibana = { git = "https://github.com/hibanaworks/hibana" }</code></pre>
+                <p>
+                    <a href="https://github.com/hibanaworks/hibana">GitHub</a> ·
+                    <a href="https://github.com/hibanaworks/hibana/discussions">Discussions</a> ·
+                    <a href="https://github.com/hibanaworks/hibana/issues">Issues</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="tagline">Built with 🔥 by the Hibana team</p>
+            <p class="license">Licensed under MIT or Apache-2.0</p>
+        </div>
+    </footer>
+</body>
+</html>
