@@ -11,7 +11,7 @@
       @media (prefers-color-scheme: dark){
         .label{ fill:#F3F4F6; } 
         .sub{ fill:#D1D5DB; } 
-        .sub2{ fill:#9CA3AF; }
+        .sub2{ fill:#D1D5DB; }
         .charcoal{ stroke:#F3F4F6; fill:#F3F4F6; }
       }
     </style>
