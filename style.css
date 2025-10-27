@@ -79,7 +79,7 @@ a:hover {
 
 /* Header */
 header {
-    padding: 56px 0 40px;
+    padding: 40px 0 24px;
     text-align: center;
 }
 
@@ -87,10 +87,62 @@ header {
     white-space: nowrap;
 }
 
+.desktop-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.logo-mark {
+    width: 290px;
+    height: 290px;
+    flex-shrink: 0;
+}
+
+.desktop-text {
+    text-align: left;
+    flex: 1;
+    max-width: 600px;
+}
+
+.desktop-title {
+    font-size: 5rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    margin-bottom: 16px;
+    color: var(--color-text);
+    line-height: 1;
+}
+
+.desktop-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.desktop-features {
+    font-size: 0.95rem;
+    color: var(--color-text-lighter);
+    line-height: 1.6;
+}
+
 .logo {
     max-width: 800px;
     width: 100%;
     height: auto;
+}
+
+.logo-full {
+    display: block;
+}
+
+.mobile-header {
+    display: none;
 }
 
 header h1 {
@@ -468,7 +520,78 @@ footer .license {
 /* Responsive */
 @media (max-width: 768px) {
     header {
-        padding: 48px 0 32px;
+        padding: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ヘッダー全体の背景として炎マークを配置 */
+    header::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120%;
+        height: 120%;
+        background-image: url('hibana.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        opacity: 0.18;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    /* デスクトップ用のヘッダーを非表示 */
+    .desktop-header {
+        display: none;
+    }
+
+    /* モバイル用のレイアウトを表示 */
+    .mobile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        padding: 60px 24px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* モバイルヘッダー内の炎マークは非表示 */
+    .logo-icon {
+        display: none;
+    }
+
+    .mobile-text {
+        text-align: center;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .mobile-title {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        margin-bottom: 24px;
+        color: var(--color-text);
+        font-family: var(--font-sans);
+    }
+
+    .mobile-subtitle {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        color: var(--color-text);
+        margin-bottom: 16px;
+        line-height: 1.6;
+        font-weight: 500;
+    }
+
+    .mobile-features {
+        font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+        color: var(--color-text-light);
+        line-height: 1.8;
     }
 
     section {
@@ -482,6 +605,12 @@ footer .license {
 
     .logo {
         max-width: 100%;
+        height: auto;
+    }
+    
+    /* SVGのテキストが小さくなりすぎないよう、最小高さを確保 */
+    header .logo {
+        min-height: 120px;
     }
 
     .intro .lead {
