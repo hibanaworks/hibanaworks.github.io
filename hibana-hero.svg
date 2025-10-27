@@ -75,6 +75,6 @@
   <g transform="translate(230,100)">
     <text class="label">HIBANA</text>
     <text class="sub" x="4" y="40">Compile-time multiparty session types for Rust</text>
-    <text class="sub2" x="4" y="70">Const projection • CapFlow control • Deterministic observability</text>
+    <text class="sub2" x="4" y="70">Const projection • CapFlow control • EPF VM • Deterministic observability</text>
   </g>
 </svg>

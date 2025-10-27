@@ -60,23 +60,23 @@
             <div class="container">
                 <div class="feature">
                     <h3>Const Projection as Effect</h3>
-                    <p><code>g::Program</code> builds protocols with const DSL, projecting to <code>RoleProgram</code> without code generation</p>
+                    <p><code>g::Program</code> composes protocols with <code>g::send</code>, <code>g::seq</code>, <code>g::par</code>, <code>g::route</code>—projecting to <code>RoleProgram</code> without code generation. Runtime uses only 4 methods: <code>flow</code>/<code>send</code> for output, <code>recv</code>/<code>offer</code> for input</p>
                 </div>
                 <div class="feature">
                     <h3>Session-as-Effect Control</h3>
-                    <p>Every cursor step is a <code>CpEffect</code>; CapFlow tokens and leases keep cancel/checkpoint/commit/rollback affine and message-driven</p>
+                    <p>Every cursor step is a <code>CpEffect</code>; CapFlow tokens ensure cancel, checkpoint, commit, and rollback remain affine and message-driven</p>
                 </div>
                 <div class="feature">
                     <h3>Deterministic Observability</h3>
-                    <p>16-byte tap ring + streaming checker makes crash-stop behavior auditable; EPF VM policies execute through the same capability channel</p>
+                    <p>16-byte tap ring + streaming checker makes crash-stop behavior auditable; EPF (Effect Policy Filter) VM executes session-aware policies through the same capability channel</p>
                 </div>
                 <div class="feature">
                     <h3>Zero Polling Transport</h3>
-                    <p><code>Transport::open</code> / <code>send</code> futures pin to the runtime you already use—no background threads or busy loops</p>
+                    <p>Drop-in transport traits let Hibana drive any async runtime without background threads or busy loops</p>
                 </div>
                 <div class="feature">
                     <h3>Embedded First</h3>
-                    <p><code>#![no_std]</code> and <code>no_alloc</code> by default, runs on bare metal with lease-first attach and affine consumption</p>
+                    <p><code>#![no_std]</code> and <code>no_alloc</code> by default—runs on bare metal with deterministic resource usage</p>
                 </div>
             </div>
         </section>
