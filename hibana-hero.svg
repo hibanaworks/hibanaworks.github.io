@@ -1,16 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="645" height="200" viewBox="0 0 645 200" role="img" aria-label="HIBANA — Const-projected MPST for zero-poll control planes">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="200" viewBox="0 0 720 200" role="img" aria-label="HIBANA — Compile-time multiparty session types for Rust">
   <defs>
     <style>
       .label { fill:#0B1020; font-weight:800; font-size:96px; letter-spacing:8px;
                font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; }
-      .sub   { fill:#475569; font-size:22px; font-family: inherit; }
-      .sub2  { fill:#64748b; font-size:14px; font-family: inherit; }
+      .sub   { fill:#475569; font-size:20px; font-weight:400; font-family: inherit; }
+      .sub2  { fill:#64748b; font-size:13px; font-weight:400; font-family: inherit; }
       .charcoal{ stroke:#0B1020; fill:#0B1020; }
       .flame1{ fill:#FF6B35; }
       .flame2{ fill:#FF8C42; }
       @media (prefers-color-scheme: dark){
-        .label{ fill:#E5E7EB; } .sub{ fill:#CBD5E1; } .sub2{ fill:#CBD5E1; }
-        .charcoal{ stroke:#E5E7EB; fill:#E5E7EB; }
+        .label{ fill:#F3F4F6; } 
+        .sub{ fill:#D1D5DB; } 
+        .sub2{ fill:#9CA3AF; }
+        .charcoal{ stroke:#F3F4F6; fill:#F3F4F6; }
       }
     </style>
   </defs>
@@ -72,8 +74,7 @@
   <!-- 右：ワードマーク -->
   <g transform="translate(230,100)">
     <text class="label">HIBANA</text>
-    <text class="sub" x="4" y="40">Const-projected multiparty session types</text>
-    <text class="sub2" x="4" y="70">Affine cursors • Capability control • Zero polling • no_std • no_alloc</text>
-    <text class="sub2" x="4" y="95">Embedded policy VM (EPF) • Deterministic observability • macro-free</text>
+    <text class="sub" x="4" y="40">Compile-time multiparty session types for Rust</text>
+    <text class="sub2" x="4" y="70">Const projection • CapFlow control • Deterministic observability</text>
   </g>
 </svg>
