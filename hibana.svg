@@ -4,14 +4,44 @@
       .charcoal{ stroke:#0B1020; fill:#0B1020; }
       .flame1{ fill:#FF6B35; }  /* ブランド橙 */
       .flame2{ fill:#FF8C42; }  /* 明るめ橙 */
+      .glow-tip {
+        fill: #FF8C42;
+        animation: glow 2s ease-in-out infinite;
+      }
+      @keyframes glow {
+        0%, 100% {
+          fill: #FF8C42;
+          filter: drop-shadow(0 0 4px #FF6B35) drop-shadow(0 0 8px #FF6B35);
+        }
+        50% {
+          fill: #FFB366;
+          filter: drop-shadow(0 0 8px #FF6B35) drop-shadow(0 0 16px #FF8C42);
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        .charcoal{ stroke:#F3F4F6; fill:#F3F4F6; }
+        .glow-tip {
+          fill: #FF8C42;
+        }
+        @keyframes glow {
+          0%, 100% {
+            fill: #FF8C42;
+            filter: drop-shadow(0 0 6px #FF6B35) drop-shadow(0 0 12px #FF6B35);
+          }
+          50% {
+            fill: #FFB366;
+            filter: drop-shadow(0 0 10px #FF6B35) drop-shadow(0 0 20px #FF8C42);
+          }
+        }
+      }
     </style>
   </defs>
 
   <!-- 中央の縦線（棒） -->
-  <line x1="400" y1="50" x2="400" y2="350" stroke="#0B1020" stroke-width="8" stroke-linecap="round"/>
+  <line x1="400" y1="50" x2="400" y2="350" class="charcoal" stroke-width="8" stroke-linecap="round"/>
 
-  <!-- 中央の小さな玉（※小さめ推奨: r=6～8） -->
-  <circle cx="400" cy="350" r="8" class="charcoal"/>
+  <!-- 中央の小さな玉（※小さめ推奨: r=6～8） - 光る効果を追加 -->
+  <circle cx="400" cy="350" r="8" class="glow-tip"/>
 
   <!-- 大きな液体の塊（奇数=3本） -->
   <path d="M200 300 Q180 280 190 250 Q210 240 250 260 Q280 270 300 290 Q320 320 310 350 Q290 370 260 360 Q220 350 200 330 Z" class="flame1" opacity=".9"/>
