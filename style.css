@@ -97,8 +97,8 @@ header {
 }
 
 .logo-mark {
-    width: 290px;
-    height: 290px;
+    width: 320px;
+    height: 320px;
     flex-shrink: 0;
 }
 
@@ -127,7 +127,7 @@ header {
 
 .desktop-features {
     font-size: 0.95rem;
-    color: var(--color-text-lighter);
+    color: var(--color-text-light);
     line-height: 1.6;
 }
 
@@ -538,7 +538,7 @@ footer .license {
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
-        opacity: 0.18;
+        opacity: 0.60;
         z-index: 0;
         pointer-events: none;
     }
