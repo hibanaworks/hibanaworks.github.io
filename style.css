@@ -156,13 +156,13 @@ header h1 {
 
 /* Sections */
 section {
-    padding: 48px 0;
+    padding: 40px 0;
 }
 
 section h2 {
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 48px;
+    margin-bottom: 36px;
     text-align: center;
     letter-spacing: -0.02em;
     position: relative;
@@ -344,7 +344,7 @@ section h2::after {
 .features .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 48px;
+    gap: 36px;
     max-width: 960px;
     margin: 0 auto;
 }
@@ -380,12 +380,12 @@ section h2::after {
 }
 
 .crate {
-    padding: 32px 0;
+    padding: 28px 0;
     transition: all 0.2s var(--ease-out);
-    margin-bottom: 40px;
+    margin-bottom: 28px;
     display: grid;
     grid-template-columns: 240px 1fr;
-    gap: 40px;
+    gap: 32px;
     align-items: start;
     position: relative;
     border-top: 3px solid var(--color-accent);
@@ -464,7 +464,7 @@ section h2::after {
 }
 
 .install h2 {
-    margin-bottom: 48px;
+    margin-bottom: 36px;
 }
 
 .install pre {
@@ -498,7 +498,7 @@ section h2::after {
 
 /* Footer */
 footer {
-    padding: 64px 0 48px;
+    padding: 40px 0 32px;
     text-align: center;
     color: var(--color-text-light);
     font-size: 0.95rem;
