@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hibana — Compile-time Multiparty Session Types for Rust</title>
-    <meta name="description" content="Compile-time multiparty session types for Rust. Const-first design. Zero polling. 100% no_std.">
+    <title>Hibana — Affine Multiparty Session Types for Rust</title>
+    <meta name="description" content="Affine multiparty session types for Rust. Const-first design. Zero polling. 100% no_std.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hibanaworks.github.io/">
-    <meta property="og:title" content="Hibana — Compile-time Multiparty Session Types for Rust">
+    <meta property="og:title" content="Hibana — Affine Multiparty Session Types for Rust">
     <meta property="og:description" content="Const projection • Affine Cursors • EPF VM • Deterministic observability">
     <meta property="og:image" content="https://hibanaworks.github.io/hibana-header.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://hibanaworks.github.io/">
-    <meta property="twitter:title" content="Hibana — Compile-time Multiparty Session Types for Rust">
+    <meta property="twitter:title" content="Hibana — Affine Multiparty Session Types for Rust">
     <meta property="twitter:description" content="Const projection • Affine Cursors • EPF VM • Deterministic observability">
     <meta property="twitter:image" content="https://hibanaworks.github.io/hibana-header.png">
     
@@ -29,7 +29,7 @@
                 <img src="hibana.svg" alt="HIBANA Mark" class="logo-mark">
                 <div class="desktop-text">
                     <h1 class="desktop-title">HIBANA</h1>
-                    <p class="desktop-subtitle">Compile-time multiparty session types for Rust</p>
+                    <p class="desktop-subtitle">Affine Multiparty Session Types for Rust</p>
                     <p class="desktop-features">Const-first design • Zero polling • 100% no_std</p>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <img src="hibana.svg" alt="HIBANA" class="logo logo-icon">
                 <div class="mobile-text">
                     <h1 class="mobile-title">HIBANA</h1>
-                    <p class="mobile-subtitle">Compile-time multiparty session types for Rust</p>
+                    <p class="mobile-subtitle">Affine Multiparty Session Types for Rust</p>
                     <p class="mobile-features">Const-first design • Zero polling • 100% no_std</p>
                 </div>
             </div>
@@ -60,19 +60,18 @@
         <section class="code-example">
             <div class="container">
                 <pre><code class="syntax-rust"><span class="hl-comment">// 1. Define the Global Choreography</span>
-<span class="hl-keyword">const</span> <span class="hl-const">PROTOCOL</span>: <span class="hl-namespace">g</span>::<span class="hl-type">Program</span><span class="hl-operator">&lt;</span>_<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Client</span>, <span class="hl-type">Server</span>, <span class="hl-type">Request</span><span class="hl-operator">&gt;</span>(),
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Server</span>, <span class="hl-type">Client</span>, <span class="hl-type">Response</span><span class="hl-operator">&gt;</span>(),
+<span class="hl-keyword">const</span> <span class="hl-const">PING_PONG</span>: <span class="hl-namespace">g</span>::<span class="hl-type">Program</span><span class="hl-operator">&lt;</span>_<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Client</span>, <span class="hl-type">Server</span>, <span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>(),
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Server</span>, <span class="hl-type">Client</span>, <span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>(),
 );
 
 <span class="hl-comment">// 2. Project to Role-Local Programs (Compile-Time)</span>
-<span class="hl-keyword">const</span> <span class="hl-const">CLIENT</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PROTOCOL</span>);
-<span class="hl-keyword">const</span> <span class="hl-const">SERVER</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">1</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PROTOCOL</span>);
+<span class="hl-keyword">const</span> <span class="hl-const">CLIENT</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PING_PONG</span>);
 
 <span class="hl-comment">// 3. Drive the Protocol (Runtime)</span>
-<span class="hl-comment">// The compiler ensures you MUST send Request before you can recv Response.</span>
-<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Request</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span><span class="hl-variable">payload</span>).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
-<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, <span class="hl-variable">resp</span>) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Response</span><span class="hl-operator">&gt;</span>().<span class="hl-keyword">await</span><span class="hl-operator">?</span>;</code></pre>
+<span class="hl-comment">// The runtime ensures you MUST send Ping before you can recv Pong.</span>
+<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span><span class="hl-number">100</span>).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
+<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, <span class="hl-variable">pong</span>) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>().<span class="hl-keyword">await</span><span class="hl-operator">?</span>;</code></pre>
             </div>
         </section>
 
@@ -80,27 +79,27 @@
             <div class="container">
                 <div class="feature">
                     <h3>Const Projection</h3>
-                    <p><code>g::Program</code> composes protocols with <code>g::send</code>, <code>g::seq</code>, <code>g::par</code>, <code>g::route</code>. Pure <code>const fn</code> composition without proc-macros.</p>
+                    <p><code>g::Program</code> builds protocols with <code>g::send / seq / par / route</code>. Pure <code>const fn</code> composition without proc-macros.</p>
                 </div>
                 <div class="feature">
                     <h3>Affine Cursors</h3>
                     <p>Every step is a linear resource. You cannot skip a step, reuse a step, or drop a session mid-flight without explicit handling.</p>
                 </div>
                 <div class="feature">
-                    <h3>Deterministic Observability</h3>
-                    <p>20-byte lock-free tap ring records every control decision for deterministic replay and debugging.</p>
+                    <h3>Transport Agnostic</h3>
+                    <p>Plug in TCP, UDP, QUIC, or in-memory channels via the <code>BindingSlot</code> trait.</p>
+                </div>
+                <div class="feature">
+                    <h3>Embedded First</h3>
+                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc</code></span> — runs on bare metal with deterministic resource usage.</p>
+                </div>
+                <div class="feature">
+                    <h3>Built-in Observability</h3>
+                    <p>A 20-byte lock-free tap ring records every control decision for deterministic replay and debugging.</p>
                 </div>
                 <div class="feature">
                     <h3>Effect Policy Filter</h3>
                     <p>An embedded bytecode VM that enforces dynamic policies (rate limits, access control) on every control transition.</p>
-                </div>
-                <div class="feature">
-                    <h3>Transport Agnostic</h3>
-                    <p>Plug in TCP, UDP, QUIC, or in-memory channels via the <code>BindingSlot</code> trait. Zero polling, drop-in compatibility.</p>
-                </div>
-                <div class="feature">
-                    <h3>Embedded First</h3>
-                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc</code></span> — runs on bare metal with deterministic resource usage</p>
                 </div>
             </div>
         </section>
