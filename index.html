@@ -59,18 +59,18 @@
 
         <section class="code-example">
             <div class="container">
-                <pre><code class="syntax-rust"><span class="hl-comment">// 1. Define the Global Choreography</span>
+                <pre><code class="syntax-rust"><span class="hl-comment">// 1. Global Choreography</span>
 <span class="hl-keyword">const</span> <span class="hl-const">PING_PONG</span>: <span class="hl-namespace">g</span>::<span class="hl-type">Program</span><span class="hl-operator">&lt;</span>_<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
     <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Client</span>, <span class="hl-type">Server</span>, <span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>(),
     <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Server</span>, <span class="hl-type">Client</span>, <span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>(),
 );
 
-<span class="hl-comment">// 2. Project to Role-Local Programs (Compile-Time)</span>
-<span class="hl-keyword">const</span> <span class="hl-const">CLIENT</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-lifetime">'static</span>, <span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::project</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span>, _, _<span class="hl-operator">&gt;</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PING_PONG</span>);
+<span class="hl-comment">// 2. Compile-Time Projection</span>
+<span class="hl-keyword">const</span> <span class="hl-const">CLIENT</span>: <span class="hl-namespace">g</span>::<span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-number">0</span>, _<span class="hl-operator">&gt;</span> <span class="hl-operator">=</span> <span class="hl-fn">g::project</span>(<span class="hl-operator">&amp;</span><span class="hl-const">PING_PONG</span>);
 
-<span class="hl-comment">// 3. Drive the Protocol (Runtime)</span>
-<span class="hl-comment">// The runtime ensures you MUST send Ping before you can recv Pong.</span>
-<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span><span class="hl-number">100</span>).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
+<span class="hl-comment">// 3. Affine Execution</span>
+<span class="hl-comment">// Compiler enforces protocol compliance.</span>
+<span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, _) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">Ping</span><span class="hl-operator">&gt;</span>()<span class="hl-operator">?.</span><span class="hl-method">send</span>(<span class="hl-operator">&amp;</span><span class="hl-number">42u32</span>).<span class="hl-keyword">await</span><span class="hl-operator">?</span>;
 <span class="hl-keyword">let</span> (<span class="hl-variable">client</span>, <span class="hl-variable">pong</span>) <span class="hl-operator">=</span> <span class="hl-variable">client</span>.<span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Pong</span><span class="hl-operator">&gt;</span>().<span class="hl-keyword">await</span><span class="hl-operator">?</span>;</code></pre>
             </div>
         </section>
@@ -79,7 +79,7 @@
             <div class="container">
                 <div class="feature">
                     <h3>Const Projection</h3>
-                    <p><code>g::Program</code> builds protocols with <code>g::send / seq / par / route</code>. Pure <code>const fn</code> composition without proc-macros.</p>
+                    <p><code>g::Program</code> builds protocols with <code>g::send / seq / par / route</code>. Pure <code>const fn</code> composition, macro-free.</p>
                 </div>
                 <div class="feature">
                     <h3>Affine Cursors</h3>
@@ -87,19 +87,19 @@
                 </div>
                 <div class="feature">
                     <h3>Transport Agnostic</h3>
-                    <p>Plug in TCP, UDP, QUIC, or in-memory channels via the <code>BindingSlot</code> trait.</p>
+                    <p><code>BindingSlot</code> trait infers transport actions from choreography metadata. Zero boilerplate.</p>
                 </div>
                 <div class="feature">
                     <h3>Embedded First</h3>
                     <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc</code></span> — runs on bare metal with deterministic resource usage.</p>
                 </div>
                 <div class="feature">
-                    <h3>Built-in Observability</h3>
-                    <p>A 20-byte lock-free tap ring records every control decision for deterministic replay and debugging.</p>
+                    <h3>Deterministic Observability</h3>
+                    <p>Dual-ring tap architecture prevents Observer Effect. Deterministic replay and debugging.</p>
                 </div>
                 <div class="feature">
                     <h3>Effect Policy Filter</h3>
-                    <p>An embedded bytecode VM that enforces dynamic policies (rate limits, access control) on every control transition.</p>
+                    <p>eBPF-inspired bytecode VM. Hot-reloadable dynamic policies.</p>
                 </div>
             </div>
         </section>
@@ -110,13 +110,13 @@
                 <div class="crate">
                     <h3>hibana-quic <span class="badge">Beta</span></h3>
                     <div class="crate-content">
-                        <p>IETF QUIC (RFC 9000) implementation. Interops with Quinn, s2n-quic, quiche.</p>
+                        <p>IETF QUIC. Interops with Quinn, s2n-quic, quiche.</p>
                     </div>
                 </div>
                 <div class="crate">
                     <h3>hibana-h3 <span class="badge">Beta</span></h3>
                     <div class="crate-content">
-                        <p>HTTP/3 (RFC 9114) + QPACK (RFC 9204) + route handlers.</p>
+                        <p>HTTP/3 + QPACK + route handlers.</p>
                     </div>
                 </div>
                 <div class="crate">
