@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hibana — Affine Multiparty Session Types for Rust</title>
-    <meta name="description" content="Affine multiparty session types for Rust. Const-first design. Zero polling. EPF VM. no_std.">
+    <meta name="description" content="Affine multiparty session types for Rust. Const projection. EPF VM. no_std / no_alloc-oriented core.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -51,9 +51,10 @@
                     What if your compiler could prove your protocol is deadlock-free?
                 </p>
                 <p>
-                    Hibana is a <code>#![no_std]</code> multiparty session types engine that brings established type-theoretic guarantees into everyday systems.
-                    Write your global choreography once, project it at compile time, and get affine cursors that make protocol violations impossible.
+                    Hibana is an affine MPST engine for Rust with a <code>#![no_std]</code> / <code>#![no_alloc]</code>-oriented core.
+                    Write your global choreography once, project it at compile time, and run affine cursors that prevent invalid protocol progression by construction.
                 </p>
+                <p class="repo-note">Status: Preview. Core ideas are stable, but APIs may evolve.</p>
             </div>
         </section>
 
@@ -87,15 +88,15 @@
                 </div>
                 <div class="feature">
                     <h3>Transport Agnostic</h3>
-                    <p><code>BindingSlot</code> trait infers transport actions from choreography metadata. Zero boilerplate.</p>
+                    <p><code>BindingSlot</code> and transport APIs keep wire I/O separate from localside choreography code.</p>
                 </div>
                 <div class="feature">
                     <h3>Embedded First</h3>
-                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc</code></span> — runs on bare metal with deterministic resource usage.</p>
+                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc-oriented core</code></span> — predictable resource usage on core protocol paths.</p>
                 </div>
                 <div class="feature">
                     <h3>Deterministic Observability</h3>
-                    <p>Dual-ring tap architecture prevents Observer Effect. Deterministic replay and debugging.</p>
+                    <p>Dual-ring tap architecture minimizes observer impact while keeping replay/debugging deterministic.</p>
                 </div>
                 <div class="feature">
                     <h3>Effect Policy Filter</h3>
@@ -106,23 +107,27 @@
 
         <section class="crates">
             <div class="container">
-                <h2>Crates</h2>
+                <h2>Crates and Demos</h2>
+                <p><code>hibana</code> is the core crate. Everything else is a public demo proving practical usability.</p>
+                <div class="crate">
+                    <h3>hibana <span class="badge">Core</span></h3>
+                    <div class="crate-content">
+                        <p>Affine MPST semantics, compile-time projection, runtime control, and EPF policy execution.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana">github.com/hibanaworks/hibana</a></p>
+                    </div>
+                </div>
                 <div class="crate">
                     <h3>hibana-quic <span class="badge">Beta</span></h3>
                     <div class="crate-content">
-                        <p>IETF QUIC. Interops with Quinn, s2n-quic, quiche.</p>
+                        <p>QUIC integration demo showing end-to-end session driving with real transport behavior.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-quic">github.com/hibanaworks/hibana-quic</a></p>
                     </div>
                 </div>
                 <div class="crate">
-                    <h3>hibana-h3 <span class="badge">Beta</span></h3>
+                    <h3>hibana-agent <span class="badge">Demo</span></h3>
                     <div class="crate-content">
-                        <p>HTTP/3 + QPACK + route handlers.</p>
-                    </div>
-                </div>
-                <div class="crate">
-                    <h3>HibanaOS <span class="coming-soon">(Coming Soon)</span></h3>
-                    <div class="crate-content">
-                        <p>A <code>#![no_std]</code> unikernel with type-safe async executor and WASI host, driven entirely by Hibana session protocols.</p>
+                        <p>AI control automation demo implemented with Hibana session types and choreography-driven branching.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-agent">github.com/hibanaworks/hibana-agent</a></p>
                     </div>
                 </div>
             </div>
