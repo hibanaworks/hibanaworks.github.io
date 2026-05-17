@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hibana — Affine Multiparty Session Types for Rust</title>
-    <meta name="description" content="Const-projected Affine Multiparty Session Types for choreography-first Rust protocols. Published on crates.io as hibana 0.5.3.">
+    <meta name="description" content="Const-projected Affine Multiparty Session Types for choreography-first Rust protocols. Published on crates.io as hibana 0.6.0.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -52,13 +52,13 @@
                 </p>
                 <p>
                     Hibana lets a protocol crate describe communication once as a global choreography,
-                    project each participant into a compact local program, attach transport, storage,
+                    project each participant into a compact resident descriptor, attach transport, storage,
                     and resolver policy through <code>hibana::integration</code>, and hand application
                     code a small affine <code>Endpoint</code>. Applications stay on
                     <code>hibana::g</code> and <code>Endpoint</code>; protocol crates use
                     <code>hibana::integration</code> to project, attach, and bind.
                 </p>
-                <p class="repo-note">Status: <code>hibana 0.5.3</code> is published on crates.io. The core crate is ready for early protocol integration.</p>
+                <p class="repo-note">Status: <code>hibana 0.6.0</code> is published on crates.io. The core crate is ready for early protocol integration.</p>
             </div>
         </section>
 
@@ -95,7 +95,7 @@
                 </div>
                 <div class="feature">
                     <h3><code>no_std</code> Core</h3>
-                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc-oriented</code></span> — caller-provided storage on core paths.</p>
+                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc-oriented</code></span> — caller-provided storage, resident descriptors, and attach sizing derived from projection.</p>
                 </div>
                 <div class="feature">
                     <h3>No Shared Protocol State</h3>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="feature">
                     <h3>Fail Closed</h3>
-                    <p>Endpoint errors are evidence, not route arms. Deadlines poison a generation unless time appears in the choreography.</p>
+                    <p>Endpoint errors are evidence, not route arms. Operational deadlines poison a generation; protocol-visible time is an explicit choreography route.</p>
                 </div>
             </div>
         </section>
@@ -115,7 +115,7 @@
                 <div class="crate">
                     <h3>hibana <span class="badge">Core</span></h3>
                     <div class="crate-content">
-                        <p>Const-projected affine MPST runtime, choreography language, endpoint progress, resolver policy, and protocol-neutral integration surface.</p>
+                        <p>Const-projected affine MPST runtime, resident descriptor attach, endpoint progress, resolver policy, and protocol-neutral integration surface.</p>
                         <p class="repo-note"><a href="https://crates.io/crates/hibana">crates.io/crates/hibana</a> · <a href="https://github.com/hibanaworks/hibana">github.com/hibanaworks/hibana</a></p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                 <h2>Get Started</h2>
                 <pre><code>cargo add hibana</code></pre>
                 <pre><code>[dependencies]
-hibana = "0.5.3"</code></pre>
+hibana = "0.6.0"</code></pre>
                 <p>
                     <a href="https://crates.io/crates/hibana">crates.io</a> ·
                     <a href="https://docs.rs/hibana">docs.rs</a> ·
