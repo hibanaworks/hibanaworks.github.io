@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hibana — Affine Multiparty Session Types for Rust</title>
-    <meta name="description" content="Const-projected Affine Multiparty Session Types for choreography-first Rust protocols. Published on crates.io as hibana 0.6.2.">
+    <meta name="description" content="Const-projected Affine Multiparty Session Types for choreography-first Rust protocols. Published on crates.io as hibana 0.8.0.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -58,7 +58,7 @@
                     <code>hibana::g</code> and <code>Endpoint</code>; protocol crates use
                     <code>hibana::integration</code> to project, attach, and bind.
                 </p>
-                <p class="repo-note">Status: <code>hibana 0.6.2</code> is published on crates.io. The core crate is ready for early protocol integration.</p>
+                <p class="repo-note">Status: <code>hibana 0.8.0</code> is published on crates.io. The core crate is ready for early protocol integration.</p>
             </div>
         </section>
 
@@ -68,8 +68,8 @@
 
 <span class="hl-comment">// 1. Write one global choreography.</span>
 <span class="hl-keyword">let</span> <span class="hl-variable">app</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">g::Role</span><span class="hl-operator">&lt;</span><span class="hl-number">0</span><span class="hl-operator">&gt;,</span> <span class="hl-type">g::Role</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">&gt;,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-type">g::Role</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">&gt;,</span> <span class="hl-type">g::Role</span><span class="hl-operator">&lt;</span><span class="hl-number">0</span><span class="hl-operator">&gt;,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
 );
 
 <span class="hl-comment">// 2. Protocol crates project, attach transport, and return Endpoint.</span>
@@ -148,7 +148,7 @@
                 <h2>Get Started</h2>
                 <pre><code>cargo add hibana</code></pre>
                 <pre><code>[dependencies]
-hibana = "0.6.2"</code></pre>
+hibana = "0.8.0"</code></pre>
                 <p>
                     <a href="https://crates.io/crates/hibana">crates.io</a> ·
                     <a href="https://docs.rs/hibana">docs.rs</a> ·
