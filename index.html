@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hibana — Affine Multiparty Session Types for Rust</title>
-    <meta name="description" content="Const-projected Affine Multiparty Session Types for choreography-first Rust protocols. Published on crates.io as hibana 0.8.0.">
+    <title>Hibana — Session-Typed Choreographic Programming for Rust</title>
+    <meta name="description" content="Session-typed choreographic programming for no_std Rust protocols, inspired by affine MPST. Published on crates.io as hibana 0.9.1.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hibanaworks.dev/">
-    <meta property="og:title" content="Hibana — Affine Multiparty Session Types for Rust">
-    <meta property="og:description" content="Rust 2024 • no_std • no-alloc-oriented • affine endpoint progress">
+    <meta property="og:title" content="Hibana — Session-Typed Choreographic Programming for Rust">
+    <meta property="og:description" content="Rust 2024 • no_std • no-alloc-oriented • affine endpoints">
     <meta property="og:image" content="https://hibanaworks.dev/hibana-header.png">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://hibanaworks.dev/">
-    <meta name="twitter:title" content="Hibana — Affine Multiparty Session Types for Rust">
-    <meta name="twitter:description" content="Rust 2024 • no_std • no-alloc-oriented • affine endpoint progress">
+    <meta name="twitter:title" content="Hibana — Session-Typed Choreographic Programming for Rust">
+    <meta name="twitter:description" content="Rust 2024 • no_std • no-alloc-oriented • affine endpoints">
     <meta name="twitter:image" content="https://hibanaworks.dev/hibana-header.png">
     
     <link rel="stylesheet" href="style.css">
@@ -29,16 +29,16 @@
                 <img src="hibana.svg" alt="HIBANA Mark" class="logo-mark">
                 <div class="desktop-text">
                     <h1 class="desktop-title">HIBANA</h1>
-                    <p class="desktop-subtitle">Affine Multiparty Session Types for Rust</p>
-                    <p class="desktop-features">Rust 2024 • no_std • no-alloc-oriented • affine endpoint progress</p>
+                    <p class="desktop-subtitle">Session-Typed Choreographic Programming for Rust</p>
+                    <p class="desktop-features">Rust 2024 • no_std • no-alloc-oriented • affine endpoints</p>
                 </div>
             </div>
             <div class="mobile-header">
                 <img src="hibana.svg" alt="HIBANA" class="logo logo-icon">
                 <div class="mobile-text">
                     <h1 class="mobile-title">HIBANA</h1>
-                    <p class="mobile-subtitle">Affine Multiparty Session Types for Rust</p>
-                    <p class="mobile-features">Rust 2024 • no_std • no-alloc-oriented • affine endpoint progress</p>
+                    <p class="mobile-subtitle">Session-Typed Choreographic Programming for Rust</p>
+                    <p class="mobile-features">Rust 2024 • no_std • no-alloc-oriented • affine endpoints</p>
                 </div>
             </div>
         </div>
@@ -48,17 +48,17 @@
         <section class="intro">
             <div class="container">
                 <p class="lead">
-                    Choreography-first endpoint progress for Rust.
+                    Session-typed choreography for Rust protocols.
                 </p>
                 <p>
-                    Hibana lets a protocol crate describe communication once as a global choreography,
-                    project each participant into a compact resident descriptor, attach transport, storage,
-                    and resolver policy through <code>hibana::integration</code>, and hand application
-                    code a small affine <code>Endpoint</code>. Applications stay on
-                    <code>hibana::g</code> and <code>Endpoint</code>; protocol crates use
-                    <code>hibana::integration</code> to project, attach, and bind.
+                    Hibana is a Rust 2024, <code>#![no_std]</code>, no-alloc-oriented
+                    runtime for session-typed choreographic programming, inspired by affine
+                    multiparty session types. A protocol crate describes communication once
+                    as a global choreography, projects each participant into a compact local
+                    program, attaches transport and storage through <code>hibana::runtime</code>,
+                    and hands application code a small affine <code>Endpoint</code>.
                 </p>
-                <p class="repo-note">Status: <code>hibana 0.8.0</code> is published on crates.io. The core crate is ready for early protocol integration.</p>
+                <p class="repo-note">Status: <code>hibana 0.9.1</code> is published on crates.io.</p>
             </div>
         </section>
 
@@ -68,13 +68,13 @@
 
 <span class="hl-comment">// 1. Write one global choreography.</span>
 <span class="hl-keyword">let</span> <span class="hl-variable">app</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span>(
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
-    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;(),</span>
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(),</span>
+    <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(),</span>
 );
 
 <span class="hl-comment">// 2. Protocol crates project, attach transport, and return Endpoint.</span>
 <span class="hl-comment">// 3. Applications drive only the localside path.</span>
-<span class="hl-variable">endpoint</span><span class="hl-operator">.</span><span class="hl-method">flow</span><span class="hl-operator">::&lt;</span><span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;()?.</span><span class="hl-method">send</span><span class="hl-operator">(&amp;</span><span class="hl-number">7</span><span class="hl-operator">).</span><span class="hl-keyword">await</span><span class="hl-operator">?;</span>
+<span class="hl-variable">endpoint</span><span class="hl-operator">.</span><span class="hl-method">send</span><span class="hl-operator">::&lt;</span><span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(&amp;</span><span class="hl-number">7</span><span class="hl-operator">).</span><span class="hl-keyword">await</span><span class="hl-operator">?;</span>
 <span class="hl-keyword">let</span> <span class="hl-variable">reply</span> <span class="hl-operator">=</span> <span class="hl-variable">endpoint</span><span class="hl-operator">.</span><span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">g::Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;().</span><span class="hl-keyword">await</span><span class="hl-operator">?;</span></code></pre>
             </div>
         </section>
@@ -87,15 +87,15 @@
                 </div>
                 <div class="feature">
                     <h3>Affine Endpoint</h3>
-                    <p><code>flow().send()</code>, <code>recv()</code>, <code>offer()</code>, and <code>RouteBranch::decode()</code> advance only the projected continuation.</p>
+                    <p><code>send()</code>, <code>recv()</code>, <code>offer()</code>, and route branch operations advance only the projected continuation.</p>
                 </div>
                 <div class="feature">
                     <h3>Two Public Surfaces</h3>
-                    <p>Application code uses <code>hibana::g</code> and <code>Endpoint</code>. Protocol crates use <code>hibana::integration</code>.</p>
+                    <p>Application code uses <code>hibana::g</code> and <code>Endpoint</code>. Protocol crates use <code>hibana::runtime</code>.</p>
                 </div>
                 <div class="feature">
                     <h3><code>no_std</code> Core</h3>
-                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc-oriented</code></span> — caller-provided storage, resident descriptors, and attach sizing derived from projection.</p>
+                    <p><span class="badge">Rust 2024</span> · <span class="badge"><code>#![no_std]</code></span> · <span class="badge"><code>no_alloc-oriented</code></span> — caller-provided storage and runtime resources derived from projection.</p>
                 </div>
                 <div class="feature">
                     <h3>No Shared Protocol State</h3>
@@ -115,14 +115,14 @@
                 <div class="crate">
                     <h3>hibana <span class="badge">Core</span></h3>
                     <div class="crate-content">
-                        <p>Const-projected affine MPST runtime, resident descriptor attach, endpoint progress, resolver policy, and protocol-neutral integration surface.</p>
+                        <p>Session-typed choreography runtime, typed projection, affine endpoint progress, transport abstraction, resolver sites, and fixed-cost tap evidence.</p>
                         <p class="repo-note"><a href="https://crates.io/crates/hibana">crates.io/crates/hibana</a> · <a href="https://github.com/hibanaworks/hibana">github.com/hibanaworks/hibana</a></p>
                     </div>
                 </div>
                 <div class="crate">
                     <h3>hibana-pico <span class="badge">Proof Target</span></h3>
                     <div class="crate-content">
-                        <p>WASI P1 projection, attach, and run proof target for choreography-owned endpoint/carrier progress on embedded hardware.</p>
+                        <p>Cargo-native projection, attach, and run integration layer for raw Hibana choreography, including WASI P1 import completion through Endpoint/carrier progress.</p>
                         <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-pico">github.com/hibanaworks/hibana-pico</a></p>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                 <h2>Get Started</h2>
                 <pre><code>cargo add hibana</code></pre>
                 <pre><code>[dependencies]
-hibana = "0.8.0"</code></pre>
+hibana = "0.9.1"</code></pre>
                 <p>
                     <a href="https://crates.io/crates/hibana">crates.io</a> ·
                     <a href="https://docs.rs/hibana">docs.rs</a> ·
