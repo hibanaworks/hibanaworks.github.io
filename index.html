@@ -3,129 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
     <title>Hibana — Choreographic Programming in Rust</title>
-    <meta name="description" content="Describe who sends what to whom, and in what order. Hibana projects the protocol and checks each participant's communication in Rust. no_std, no heap allocation, stable Rust 1.95.">
+    <meta name="description" content="Describe who sends what to whom, and in what order. Hibana projects the protocol and checks communication in Rust. no_std, no heap allocation, stable Rust 1.95.">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hibanaworks.dev/">
     <meta property="og:title" content="Hibana — Choreographic Programming in Rust">
-    <meta property="og:description" content="A shared protocol, handwritten Rust participants, and runtime checks. Includes experimental QUIC v1/v2, HTTP/3, and TLS 1.3 implementations.">
+    <meta property="og:description" content="Compile-time projection • Runtime checks • no_std • No heap allocation">
     <meta property="og:image" content="https://hibanaworks.dev/hibana-header.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="HIBANA — Choreographic Programming in Rust">
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://hibanaworks.dev/">
     <meta name="twitter:title" content="Hibana — Choreographic Programming in Rust">
-    <meta name="twitter:description" content="A shared protocol, handwritten Rust participants, and runtime checks. no_std and no heap allocation.">
+    <meta name="twitter:description" content="Compile-time projection • Runtime checks • no_std • No heap allocation">
     <meta name="twitter:image" content="https://hibanaworks.dev/hibana-header.png">
-    <meta name="twitter:image:alt" content="HIBANA — Choreographic Programming in Rust">
-    <link rel="canonical" href="https://hibanaworks.dev/">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1 class="visually-hidden">Hibana — Choreographic Programming in Rust</h1>
-            <picture>
-                <source media="(prefers-color-scheme: dark)" srcset="hibana-header-dark.svg">
-                <source media="(prefers-color-scheme: light)" srcset="hibana-header.svg">
-                <img class="header-image" src="hibana-header.svg" width="1200" height="390" alt="HIBANA — Choreographic Programming in Rust">
-            </picture>
-            <nav aria-label="Project links">
-                <a href="https://github.com/hibanaworks/hibana">GitHub</a>
-                <a href="https://docs.rs/hibana/0.9.8">API docs</a>
-                <a href="https://github.com/hibanaworks/hibana/blob/main/README.ja.md">日本語</a>
-            </nav>
+            <div class="desktop-header">
+                <img src="hibana.svg" alt="HIBANA Mark" class="logo-mark">
+                <div class="desktop-text">
+                    <h1 class="desktop-title">HIBANA</h1>
+                    <p class="desktop-subtitle">Choreographic Programming in Rust</p>
+                    <p class="desktop-features">Compile-time projection • Runtime checks • no_std • No heap allocation</p>
+                </div>
+            </div>
+            <div class="mobile-header">
+                <img src="hibana.svg" alt="HIBANA" class="logo logo-icon">
+                <div class="mobile-text">
+                    <h1 class="mobile-title">HIBANA</h1>
+                    <p class="mobile-subtitle">Choreographic Programming in Rust</p>
+                    <p class="mobile-features">Compile-time projection • Runtime checks • no_std • No heap allocation</p>
+                </div>
+            </div>
         </div>
     </header>
+
     <main>
         <section class="intro">
             <div class="container">
-                <p class="lead">Describe who sends what to whom, and in what order.</p>
-                <p>Hibana is a Rust library for choreographic programming. You write one shared protocol and each participant's Rust code. Hibana derives the communication steps for each participant and checks its sends and receives at runtime.</p>
-                <p>Participants can be tasks in one program or programs on different machines. The core uses <code>no_std</code>, requires no heap allocator, and runs on stable Rust 1.95 or newer. Your program supplies its memory.</p>
+                <p class="lead">
+                    Describe who sends what to whom, and in what order.
+                </p>
+                <p>
+                    Hibana is a Rust library for choreographic programming. You write
+                    one shared protocol and each participant's Rust code. Hibana derives
+                    the communication steps for each participant and checks its sends
+                    and receives at runtime.
+                </p>
+                <p>
+                    Participants can be tasks in one program or programs on different
+                    machines. The core uses <code>no_std</code>, requires no heap allocator,
+                    and runs on stable Rust 1.95 or newer. Your program supplies its memory.
+                </p>
+                <p class="repo-note">Status: <code>hibana 0.9.8</code> is published on crates.io.</p>
             </div>
         </section>
-        <section class="install" id="install">
+
+        <section class="code-example">
             <div class="container">
-                <h2>Add to your project</h2>
+                <pre><code class="syntax-rust"><span class="hl-keyword">use</span> <span class="hl-namespace">hibana</span><span class="hl-operator">::{</span>
+    <span class="hl-type">Endpoint</span><span class="hl-operator">,</span> <span class="hl-type">EndpointError</span><span class="hl-operator">,</span>
+    <span class="hl-namespace">g</span><span class="hl-operator">::{</span><span class="hl-keyword">self</span><span class="hl-operator">,</span> <span class="hl-type">Msg</span><span class="hl-operator">},</span>
+    <span class="hl-namespace">runtime</span><span class="hl-operator">::</span><span class="hl-namespace">program</span><span class="hl-operator">::{</span><span class="hl-type">RoleProgram</span><span class="hl-operator">,</span> <span class="hl-fn">project</span><span class="hl-operator">},</span>
+<span class="hl-operator">};</span>
+
+<span class="hl-keyword">fn</span> <span class="hl-fn">ping_pong</span><span class="hl-operator">() -&gt; (</span><span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-number">0</span><span class="hl-operator">&gt;,</span> <span class="hl-type">RoleProgram</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">&gt;) {</span>
+    <span class="hl-keyword">let</span> <span class="hl-variable">choreography</span> <span class="hl-operator">=</span> <span class="hl-fn">g::seq</span><span class="hl-operator">(</span>
+        <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(),</span>
+        <span class="hl-fn">g::send</span><span class="hl-operator">::&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-number">0</span><span class="hl-operator">,</span> <span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(),</span>
+    <span class="hl-operator">);</span>
+    <span class="hl-operator">(</span><span class="hl-fn">project</span><span class="hl-operator">(&amp;</span><span class="hl-variable">choreography</span><span class="hl-operator">),</span> <span class="hl-fn">project</span><span class="hl-operator">(&amp;</span><span class="hl-variable">choreography</span><span class="hl-operator">))</span>
+<span class="hl-operator">}</span>
+
+<span class="hl-keyword">async fn</span> <span class="hl-fn">client</span><span class="hl-operator">(</span><span class="hl-variable">endpoint</span><span class="hl-operator">: &amp;</span><span class="hl-keyword">mut</span> <span class="hl-type">Endpoint</span><span class="hl-operator">&lt;'_,</span> <span class="hl-number">0</span><span class="hl-operator">&gt;) -&gt; Result&lt;</span><span class="hl-type">u32</span><span class="hl-operator">,</span> <span class="hl-type">EndpointError</span><span class="hl-operator">&gt; {</span>
+    <span class="hl-variable">endpoint</span><span class="hl-operator">.</span><span class="hl-method">send</span><span class="hl-operator">::&lt;</span><span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">1</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;(&amp;</span><span class="hl-number">7</span><span class="hl-operator">).</span><span class="hl-keyword">await</span><span class="hl-operator">?;</span>
+    <span class="hl-variable">endpoint</span><span class="hl-operator">.</span><span class="hl-method">recv</span><span class="hl-operator">::&lt;</span><span class="hl-type">Msg</span><span class="hl-operator">&lt;</span><span class="hl-number">2</span><span class="hl-operator">,</span> <span class="hl-type">u32</span><span class="hl-operator">&gt;&gt;().</span><span class="hl-keyword">await</span>
+<span class="hl-operator">}</span></code></pre>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature">
+                    <h3>One global protocol</h3>
+                    <p>Describe messages, choices, parallel communication, and repetition in one shared protocol. Each role follows its part through an endpoint.</p>
+                </div>
+                <div class="feature">
+                    <h3>Endpoint projection</h3>
+                    <p>Rust's const evaluation derives local protocols for each role. Projection produces communication data. You write the participant functions in Rust.</p>
+                </div>
+                <div class="feature">
+                    <h3>Endpoint operations</h3>
+                    <p>A successful send or receive advances a permitted step. Previewing a branch, rejecting an operation, or dropping it before commit does not advance the protocol.</p>
+                </div>
+                <div class="feature">
+                    <h3><code>no_std</code> and no heap allocation</h3>
+                    <p>The core uses memory supplied by your program and borrowed buffers. The same API runs on hosted and embedded targets.</p>
+                </div>
+                <div class="feature">
+                    <h3>Choices and errors</h3>
+                    <p>Roles must learn choices before acting differently. The transport supplies deadlines. A transport error ends the current session run without advancing the failed operation.</p>
+                </div>
+                <div class="feature">
+                    <h3>Verification</h3>
+                    <p>The Lean proofs cover stated protocol models and assumptions. Deadlock freedom also requires an accepted protocol, conforming transport, matching codecs, and fair scheduling. See <a href="https://github.com/hibanaworks/hibana#guarantees-and-verification">the guarantees</a>.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="crates">
+            <div class="container">
+                <h2>Core and Integrations</h2>
+                <p><code>hibana</code> remains protocol-neutral. Integrations own deployment-specific behavior without expanding the core API.</p>
+                <div class="crate">
+                    <h3>hibana <span class="badge">Core</span></h3>
+                    <div class="crate-content">
+                        <p>Write a global protocol and drive each participant through an endpoint. Hibana projects the protocol at compile time and checks communication at runtime.</p>
+                        <p class="repo-note"><a href="https://crates.io/crates/hibana">crates.io/crates/hibana</a> · <a href="https://github.com/hibanaworks/hibana">github.com/hibanaworks/hibana</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-quic <span class="badge">QUIC / HTTP/3</span></h3>
+                    <div class="crate-content">
+                        <p>QUIC v1/v2 and HTTP/3 using Hibana 0.9.8. Its protocol describes communication among packet processing, TLS, transmission, and timers. Applications can also write a shared protocol for messages sent over QUIC.</p>
+                        <p>The <a href="https://github.com/hibanaworks/hibana-quic/tree/main/examples/hello-quic">hello-quic example</a> sends numbers from a client and returns their squares from a server. Both use endpoints derived from the same application protocol.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-quic">github.com/hibanaworks/hibana-quic</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-tls <span class="badge">TLS 1.3</span></h3>
+                    <div class="crate-content">
+                        <p>TLS 1.3 handshake and authentication for hibana-quic, using Hibana 0.9.8. Its protocol describes the order of transcript checks and key handoff. It provides TLS for QUIC, with no TCP TLS records or TLS socket API.</p>
+                        <p>QUIC and TLS are experimental. Hibana's protocol proofs do not prove the correctness of these implementations.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-tls">github.com/hibanaworks/hibana-tls</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-pico <span class="badge">Integration</span></h3>
+                    <div class="crate-content">
+                        <p>Cargo-native projection, attach, and run integration for raw Hibana choreography, including WASI P1 examples driven through endpoint and carrier progress.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-pico">github.com/hibanaworks/hibana-pico</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-mgmt <span class="badge">Management</span></h3>
+                    <div class="crate-content">
+                        <p>Ordinary management choreography prefixes and payload owners kept outside the protocol-neutral Hibana core.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-mgmt">github.com/hibanaworks/hibana-mgmt</a></p>
+                    </div>
+                </div>
+                <div class="crate">
+                    <h3>hibana-epf <span class="badge">Evidence</span></h3>
+                    <div class="crate-content">
+                        <p>Compact typed evidence images, ingestion, evaluation, and replay built from Hibana observation records outside the core crate.</p>
+                        <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-epf">github.com/hibanaworks/hibana-epf</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="install">
+            <div class="container">
+                <h2>Get Started</h2>
                 <pre><code>cargo add hibana@0.9.8</code></pre>
-                <p>Or add it to <code>Cargo.toml</code>:</p>
                 <pre><code>[dependencies]
 hibana = "0.9.8"</code></pre>
-                <p class="repo-note"><a href="https://crates.io/crates/hibana/0.9.8">Hibana 0.9.8 on crates.io</a> · MIT or Apache-2.0</p>
-            </div>
-        </section>
-        <section class="exchange" id="example">
-            <div class="container">
-                <h2>A small exchange</h2>
-                <p>A client sends a number. The server adds one and sends it back. Write that order once:</p>
-                <pre><code>use hibana::g;
-
-const CLIENT: u8 = 0;
-const SERVER: u8 = 1;
-type Request = g::Msg&lt;1, u32&gt;;
-type Reply = g::Msg&lt;2, u32&gt;;
-
-let exchange = g::seq(
-    g::send::&lt;CLIENT, SERVER, Request&gt;(),
-    g::send::&lt;SERVER, CLIENT, Reply&gt;(),
-);</code></pre>
-                <p>Each participant gets an endpoint, a handle for its part of the protocol:</p>
-                <div class="participants">
-                    <div>
-                        <h3>Client</h3>
-                        <pre><code>client.send::&lt;Request&gt;(&amp;7).await?;
-let answer = client.recv::&lt;Reply&gt;().await?;</code></pre>
-                    </div>
-                    <div>
-                        <h3>Server</h3>
-                        <pre><code>let number = server.recv::&lt;Request&gt;().await?;
-server.send::&lt;Reply&gt;(&amp;(number + 1)).await?;</code></pre>
-                    </div>
-                </div>
-                <p>These are excerpts. The <a href="https://github.com/hibanaworks/hibana/blob/main/examples/ping_pong.rs">complete example</a> also supplies memory and a transport, then attaches both endpoints. Receiving the reply before sending the request compiles as Rust, but Hibana returns an error because the operation is out of order.</p>
-                <p>Protocols can also describe choices, independent communication in parallel, and repetition.</p>
-            </div>
-        </section>
-        <section class="integrations" id="integrations">
-            <div class="container">
-                <h2>QUIC and TLS</h2>
-                <div class="projects">
-                    <article>
-                        <h3><a href="https://github.com/hibanaworks/hibana-quic">hibana-quic</a></h3>
-                        <p>QUIC v1/v2 and HTTP/3. It uses Hibana for communication among packet processing, TLS, transmission, and timers. Applications can also write a shared protocol for messages sent over QUIC.</p>
-                        <p>The <a href="https://github.com/hibanaworks/hibana-quic/tree/main/examples/hello-quic">hello-quic example</a> sends numbers from a client and returns their squares from a server. Both use endpoints derived from the same application protocol.</p>
-                    </article>
-                    <article>
-                        <h3><a href="https://github.com/hibanaworks/hibana-tls">hibana-tls</a></h3>
-                        <p>TLS 1.3 handshake and authentication for hibana-quic. Its protocol describes the order of transcript checks and key handoff. Cryptographic operations and certificate checks are implemented in Rust.</p>
-                        <p>It provides TLS for QUIC, with no TCP TLS records or TLS socket API.</p>
-                    </article>
-                </div>
-                <p>Both libraries use Hibana 0.9.8. They are experimental. Hibana's protocol proofs do not prove the correctness of their QUIC or TLS implementations.</p>
-            </div>
-        </section>
-        <section class="mechanism" id="how-it-works">
-            <div class="container">
-                <h2>How it works</h2>
-                <h3>One global protocol, one local protocol per role</h3>
-                <p>In multiparty session types (MPST), a global protocol describes communication among all participants. Endpoint projection derives a local protocol for each role. Hibana performs this projection through Rust's const evaluation and rejects protocols that fail its checks during compilation.</p>
-                <p>You write the participant functions and their computations in Rust. Projection produces protocol data for each role. An endpoint tracks its progress through that data rather than changing its Rust type after every operation.</p>
-                <h3>Choices must reach the roles that need them</h3>
-                <p>A role must learn which branch was chosen before it acts differently in that branch. This is knowledge of choice. Hibana checks incoming messages for that evidence during projection. It rejects choices it cannot check under its current rules. It does not add broadcasts, so include any messages needed to inform another role.</p>
-                <h3>Errors and progress</h3>
-                <p>The runtime checks the next operation, peer, message kind, and payload format before advancing. Previewing a branch does not advance it. A successful send means that the transport accepted the message, not that the peer received it.</p>
-                <p>The transport supplies deadlines and reports I/O errors. A transport error ends the current session run. To communicate after a timeout, include that outcome in the protocol or begin a fresh run after failure.</p>
-                <p>Hibana checks communication against the local protocol. It does not inspect running tasks to detect or repair deadlock cycles. The Lean proofs establish properties for their stated models. Applying protocol deadlock freedom to a running system also requires an accepted protocol, matching peers and codecs, a conforming transport, and fair scheduling.</p>
-                <p>For the API, transport contract, and exact proof assumptions, see the <a href="https://github.com/hibanaworks/hibana#how-hibana-works">README</a>. The direct research inspiration is <a href="https://arxiv.org/abs/2204.13464">affine multiparty session types (AMPST)</a>.</p>
+                <p>
+                    <a href="https://crates.io/crates/hibana">crates.io</a> ·
+                    <a href="https://docs.rs/hibana/0.9.8">docs.rs</a> ·
+                    <a href="https://github.com/hibanaworks/hibana">GitHub</a>
+                </p>
             </div>
         </section>
     </main>
+
     <footer>
         <div class="container">
-            <p>Hibana · <a href="https://github.com/hibanaworks/hibana">Source</a> · <a href="https://docs.rs/hibana/0.9.8">Documentation</a></p>
-            <p>Licensed under MIT or Apache-2.0</p>
+            <p class="tagline">Built by the Hibana team</p>
+            <p class="license">Licensed under MIT or Apache-2.0</p>
         </div>
     </footer>
 </body>
