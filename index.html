@@ -61,7 +61,7 @@
                     machines. The core uses <code>no_std</code>, requires no heap allocator,
                     and runs on stable Rust 1.95 or newer. Your program supplies its memory.
                 </p>
-                <p class="repo-note">Status: <code>hibana 0.9.8</code> is published on crates.io.</p>
+                <p class="repo-note">Status: <code>hibana 0.9.9</code> is published on crates.io.</p>
             </div>
         </section>
 
@@ -131,7 +131,7 @@
                 <div class="crate">
                     <h3>hibana-quic <span class="badge">QUIC / HTTP/3</span></h3>
                     <div class="crate-content">
-                        <p>QUIC v1/v2 and HTTP/3 using Hibana 0.9.8. Its protocol describes communication among packet processing, TLS, transmission, and timers. Applications can also write a shared protocol for messages sent over QUIC.</p>
+                        <p>QUIC v1/v2 and HTTP/3 using Hibana 0.9.9. Its protocol describes communication among packet processing, TLS, transmission, and timers. Applications can also write a shared protocol for messages sent over QUIC.</p>
                         <p>The <a href="https://github.com/hibanaworks/hibana-quic/tree/main/examples/hello-quic">hello-quic example</a> sends numbers from a client and returns their squares from a server. Both use endpoints derived from the same application protocol.</p>
                         <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-quic">github.com/hibanaworks/hibana-quic</a></p>
                     </div>
@@ -139,7 +139,7 @@
                 <div class="crate">
                     <h3>hibana-tls <span class="badge">TLS 1.3</span></h3>
                     <div class="crate-content">
-                        <p>TLS 1.3 handshake and authentication for hibana-quic, using Hibana 0.9.8. Its protocol describes the order of transcript checks and key handoff. It provides TLS for QUIC, with no TCP TLS records or TLS socket API.</p>
+                        <p>TLS 1.3 handshake and authentication for hibana-quic, using Hibana 0.9.9. Its protocol describes the order of transcript checks and key handoff. It provides TLS for QUIC, with no TCP TLS records or TLS socket API.</p>
                         <p>QUIC and TLS are experimental. Hibana's protocol proofs do not prove the correctness of these implementations.</p>
                         <p class="repo-note"><a href="https://github.com/hibanaworks/hibana-tls">github.com/hibanaworks/hibana-tls</a></p>
                     </div>
@@ -171,12 +171,12 @@
         <section class="install">
             <div class="container">
                 <h2>Get Started</h2>
-                <pre><code>cargo add hibana@0.9.8</code></pre>
+                <pre><code>cargo add hibana@0.9.9</code></pre>
                 <pre><code>[dependencies]
-hibana = "0.9.8"</code></pre>
+hibana = "0.9.9"</code></pre>
                 <p>
                     <a href="https://crates.io/crates/hibana">crates.io</a> ·
-                    <a href="https://docs.rs/hibana/0.9.8">docs.rs</a> ·
+                    <a href="https://docs.rs/hibana/0.9.9">docs.rs</a> ·
                     <a href="https://github.com/hibanaworks/hibana">GitHub</a>
                 </p>
             </div>
